@@ -461,7 +461,7 @@ func NewRaft(conf *Config, fsm FSM, logs LogStore, stable StableStore, snaps Sna
 
 	// Try to restore the current term.
 	currentTerm, err := stable.GetUint64(keyCurrentTerm)
-	if err != nil && err != ErrKeyNotFound {
+	if err != nil && err.Error() != ErrKeyNotFound.Error() {
 		return nil, fmt.Errorf("failed to load current term: %v", err)
 	}
 
